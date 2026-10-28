@@ -1,0 +1,1021 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#071311">
+<title>RAIL-URJA | Visitor Reviews</title>
+
+<style>
+:root {
+  --bg:#06100f;
+  --panel:#0b1b1b;
+  --line:#1d3938;
+  --text:#edf6f3;
+  --muted:#9bb4b2;
+  --green:#5ee0a0;
+  --red:#ff746d;
+}
+
+* { box-sizing:border-box; }
+
+body {
+  margin:0;
+  background:radial-gradient(ellipse at 75% 0%,#12302a,transparent 36%),var(--bg);
+  color:var(--text);
+  font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;
+  min-height:100vh;
+}
+
+button,input,textarea { font:inherit; }
+button { cursor:pointer; }
+
+.app {
+  display:grid;
+  grid-template-columns:245px minmax(0,1fr);
+  min-height:100vh;
+}
+
+.sidebar {
+  border-right:1px solid var(--line);
+  background:#071513;
+  padding:28px 18px;
+  display:flex;
+  flex-direction:column;
+  position:sticky;
+  top:0;
+  height:100vh;
+}
+
+.brand {
+  display:flex;
+  gap:12px;
+  align-items:center;
+  padding:5px 8px 30px;
+}
+
+.brand-mark {
+  width:43px;
+  height:43px;
+  border-radius:14px;
+  background:linear-gradient(145deg,#73f0b5,#16855e);
+  display:grid;
+  place-items:center;
+  color:#062118;
+  font-size:26px;
+  font-weight:900;
+}
+
+.brand-name { font-size:21px;font-weight:760; }
+.brand-sub { font-size:11px;color:var(--muted);margin-top:3px; }
+
+.nav { display:grid;gap:8px; }
+
+.nav button {
+  border:1px solid transparent;
+  background:transparent;
+  color:#a9c0bd;
+  text-align:left;
+  padding:13px;
+  border-radius:12px;
+}
+
+.nav button.active,.nav button:hover {
+  background:linear-gradient(100deg,#17483a,#12372f);
+  border-color:#24644e;
+  color:#effff7;
+}
+
+.sidebar-note {
+  margin-top:auto;
+  padding:19px 13px;
+  border-top:1px solid var(--line);
+  color:#a6c8bd;
+  font-size:13px;
+  line-height:1.6;
+}
+
+.sidebar-note strong {
+  display:block;
+  color:var(--green);
+  font-size:16px;
+}
+
+.main {
+  min-width:0;
+  padding:28px clamp(18px,3.2vw,48px) 22px;
+  max-width:1700px;
+  width:100%;
+  margin:auto;
+}
+
+.topline {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+  margin-bottom:23px;
+}
+
+.eyebrow {
+  font-size:11px;
+  letter-spacing:2px;
+  color:var(--green);
+  font-weight:750;
+  text-transform:uppercase;
+}
+
+.project-title {
+  font-size:clamp(30px,4vw,49px);
+  letter-spacing:-1.8px;
+  margin:7px 0;
+  font-weight:800;
+}
+
+.project-title span { color:#a6f0cd; }
+
+.subtitle { color:#a7bfbb;font-size:14px; }
+
+.pill {
+  border:1px solid #32624d;
+  border-radius:999px;
+  padding:10px 14px;
+  color:#bff8dc;
+  font-size:12px;
+  background:#0c231e;
+  white-space:nowrap;
+}
+
+.hero {
+  border:1px solid #23413b;
+  border-radius:19px;
+  padding:27px 28px;
+  margin-bottom:23px;
+  background:linear-gradient(100deg,#0d2420,#0b1b1b,#10251e);
+}
+
+.hero h2 { font-size:23px;margin:0 0 8px; }
+
+.hero p {
+  margin:0;
+  color:#adc3bf;
+  max-width:590px;
+  font-size:14px;
+  line-height:1.7;
+}
+
+.hero-tag {
+  margin-top:17px;
+  display:inline-block;
+  color:#bdf7d8;
+  font-size:12px;
+}
+
+.layout {
+  display:grid;
+  grid-template-columns:minmax(0,1.35fr) minmax(280px,.9fr);
+  gap:20px;
+  align-items:start;
+}
+
+.card {
+  background:linear-gradient(145deg,#0d1f1f,#0a1919);
+  border:1px solid var(--line);
+  border-radius:17px;
+  overflow:hidden;
+  margin-bottom:18px;
+}
+
+.card-head {
+  padding:20px 22px;
+  border-bottom:1px solid #1b3332;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+
+.card-head h3 { font-size:16px;margin:0; }
+.card-head p { font-size:12px;color:var(--muted);margin:5px 0 0; }
+.card-body { padding:22px; }
+
+.field { margin-bottom:21px; }
+
+.field label,.field-label {
+  display:block;
+  font-size:13px;
+  font-weight:600;
+  color:#d7e7e2;
+  margin-bottom:9px;
+}
+
+.required { color:var(--green); }
+
+.control {
+  width:100%;
+  background:#102424;
+  border:1px solid #294342;
+  border-radius:10px;
+  color:var(--text);
+  padding:13px 14px;
+  outline:none;
+}
+
+.control::placeholder { color:#708b87; }
+
+.control:focus {
+  border-color:#4abf8a;
+  box-shadow:0 0 0 3px #45cb8b18;
+}
+
+.rating-row {
+  display:flex;
+  align-items:center;
+  gap:5px;
+  flex-wrap:wrap;
+}
+
+.star {
+  border:0;
+  background:transparent;
+  color:#45615e;
+  padding:2px;
+  font-size:25px;
+}
+
+.star.selected { color:#f2c86f; }
+
+.rating-caption {
+  font-size:12px;
+  color:var(--muted);
+  margin-left:7px;
+}
+
+.moods {
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:9px;
+}
+
+.mood {
+  border:1px solid #2b4643;
+  background:#102323;
+  color:#afc5c1;
+  border-radius:10px;
+  padding:12px 5px;
+  font-size:13px;
+}
+
+.mood.selected[data-mood="Good"] {
+  border-color:#37b77c;
+  background:#12372b;
+  color:#86f1b6;
+}
+
+.mood.selected[data-mood="Normal"] {
+  border-color:#8aa9ad;
+  background:#1b3032;
+  color:#e0f1ef;
+}
+
+.mood.selected[data-mood="Bad"] {
+  border-color:#d55e58;
+  background:#3a211f;
+  color:#ff9992;
+}
+
+textarea.control {
+  resize:vertical;
+  min-height:115px;
+  line-height:1.55;
+}
+
+.counter {
+  text-align:right;
+  font-size:11px;
+  color:#77918d;
+  margin-top:6px;
+}
+
+.form-bottom {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+.privacy {
+  font-size:11px;
+  color:#78928d;
+  line-height:1.5;
+}
+
+.submit {
+  border:0;
+  border-radius:10px;
+  padding:13px 19px;
+  background:linear-gradient(100deg,#1b7655,#2da978);
+  color:white;
+  font-weight:700;
+  font-size:13px;
+}
+
+.submit:hover { filter:brightness(1.12); }
+
+.right-stack { display:grid;gap:18px; }
+
+.stats {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  padding:19px 10px;
+}
+
+.stat {
+  text-align:center;
+  padding:4px 5px;
+  border-right:1px solid #203a38;
+}
+
+.stat:last-child { border-right:0; }
+
+.stat-icon { font-size:19px;color:var(--green); }
+.stat-number { font-size:26px;font-weight:750;margin-top:7px; }
+.stat-label { font-size:11px;color:#9fb7b2;margin-top:5px; }
+
+.recent-list { padding:8px 18px 17px; }
+
+.review-item {
+  padding:15px 0;
+  border-bottom:1px solid #1c3432;
+}
+
+.review-item:last-child { border-bottom:0; }
+
+.review-top {
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.review-person { font-size:13px;font-weight:700; }
+.review-date { font-size:10px;color:#78938e;margin-top:4px; }
+.review-stars { color:#f2c86f;font-size:12px; }
+
+.review-mood {
+  display:inline-block;
+  margin-top:8px;
+  font-size:10px;
+  border-radius:99px;
+  padding:4px 8px;
+  background:#14382b;
+  color:#9cf0c0;
+}
+
+.review-mood.normal { background:#203234;color:#c0d6d5; }
+.review-mood.bad { background:#3b2321;color:#ffaaa3; }
+
+.review-text {
+  font-size:12px;
+  line-height:1.65;
+  color:#b4c9c4;
+  margin:9px 0 0;
+  overflow-wrap:anywhere;
+  white-space:pre-wrap;
+}
+
+.empty {
+  padding:31px 15px 36px;
+  text-align:center;
+  color:#8aa49f;
+}
+
+.empty-icon {
+  font-size:28px;
+  margin-bottom:12px;
+  color:#75d5a7;
+}
+
+.empty strong {
+  display:block;
+  color:#d0e2dd;
+  font-size:13px;
+  margin-bottom:6px;
+}
+
+.empty p { font-size:12px;line-height:1.5; }
+
+.small-btn {
+  border:1px solid #2a4843;
+  background:#102321;
+  color:#c4dad4;
+  border-radius:8px;
+  padding:8px 11px;
+  font-size:11px;
+}
+
+.history-view { display:none; }
+.history-tools { display:flex;gap:8px;flex-wrap:wrap; }
+.hidden { display:none!important; }
+
+.footer {
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
+  padding-top:20px;
+  margin-top:24px;
+  border-top:1px solid #19302e;
+  color:#6f8c86;
+  font-size:11px;
+}
+
+.footer strong { color:#9ecab8; }
+
+.toast {
+  position:fixed;
+  bottom:24px;
+  left:50%;
+  transform:translate(-50%,20px);
+  opacity:0;
+  pointer-events:none;
+  background:#123a2b;
+  border:1px solid #3a8d67;
+  color:#d9ffea;
+  border-radius:10px;
+  padding:12px 17px;
+  font-size:13px;
+  transition:.25s;
+  z-index:10;
+  max-width:calc(100vw - 28px);
+}
+
+.toast.show {
+  opacity:1;
+  transform:translate(-50%,0);
+}
+
+@media(max-width:1050px) {
+  .app { grid-template-columns:205px minmax(0,1fr); }
+  .layout { grid-template-columns:minmax(0,1fr); }
+}
+
+@media(max-width:700px) {
+  .app { display:block; }
+  .sidebar {
+    position:relative;
+    width:100%;
+    height:auto;
+    padding:14px 15px;
+    border-right:0;
+    border-bottom:1px solid var(--line);
+    display:block;
+  }
+  .brand { padding:2px 3px 13px; }
+  .brand-mark { width:38px;height:38px; }
+  .brand-name { font-size:18px; }
+  .nav { display:flex;gap:7px; }
+  .nav button {
+    flex:1;
+    text-align:center;
+    padding:10px 5px;
+    font-size:12px;
+  }
+  .sidebar-note { display:none; }
+  .main { padding:21px 14px; }
+  .topline { align-items:flex-start; }
+  .pill { font-size:10px;padding:8px;white-space:normal; }
+  .project-title { font-size:34px; }
+  .hero { padding:22px 19px; }
+  .hero h2 { font-size:20px; }
+  .card-body { padding:18px; }
+  .card-head { padding:17px 18px; }
+  .right-stack { grid-template-columns:minmax(0,1fr); }
+  .stats { padding:17px 4px; }
+  .stat-number { font-size:23px; }
+  .moods { gap:6px; }
+  .mood { font-size:12px; }
+}
+</style>
+</head>
+
+<body>
+<div class="app">
+
+<aside class="sidebar">
+  <div class="brand">
+    <div class="brand-mark">ϟ</div>
+    <div>
+      <div class="brand-name">RAIL-URJA</div>
+      <div class="brand-sub">Powering a greener tomorrow</div>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <button class="active" id="navGive" type="button">✳ &nbsp; Give Review</button>
+    <button id="navHistory" type="button">◷ &nbsp; Review History</button>
+  </nav>
+
+  <div class="sidebar-note">
+    <strong>Small vibrations.</strong>
+    <strong>Big impact.</strong>
+    <p>Smart railway vibration energy harvesting for a sustainable future.</p>
+  </div>
+</aside>
+
+<main class="main">
+
+<header class="topline">
+  <div>
+    <div class="eyebrow">VibeVolt • Visitor feedback</div>
+    <h1 class="project-title">RAIL<span>-URJA</span></h1>
+    <div class="subtitle">SMART RAILWAY VIBRATION ENERGY HARVESTER</div>
+  </div>
+  <div class="pill">● Clean Energy · Better Tomorrow</div>
+</header>
+
+<section class="hero">
+  <h2 id="pageHeading">Visitor Reviews</h2>
+  <p id="pageIntro">Your feedback helps us improve our idea and move towards a cleaner, greener future. Tell us what you think about RAIL-URJA.</p>
+  <div class="hero-tag">↗ Built for a more sustainable railway future</div>
+</section>
+
+<section class="layout" id="giveLayout">
+
+<section class="card">
+  <div class="card-head">
+    <div>
+      <h3>Share Your Experience</h3>
+      <p>A few words from you can make a difference.</p>
+    </div>
+    <span style="font-size:21px;color:var(--green)">✎</span>
+  </div>
+
+  <div class="card-body">
+    <form id="reviewForm">
+
+      <div class="field">
+        <label for="visitorName">Your name <span class="required">*</span></label>
+        <input class="control" id="visitorName" maxlength="60" placeholder="Enter your name" required>
+      </div>
+
+      <div class="field">
+        <div class="field-label">Your rating <span class="required">*</span></div>
+        <div class="rating-row" id="ratingRow">
+          <button class="star" type="button" data-rating="1">★</button>
+          <button class="star" type="button" data-rating="2">★</button>
+          <button class="star" type="button" data-rating="3">★</button>
+          <button class="star" type="button" data-rating="4">★</button>
+          <button class="star" type="button" data-rating="5">★</button>
+          <button class="star" type="button" data-rating="6">★</button>
+          <button class="star" type="button" data-rating="7">★</button>
+          <button class="star" type="button" data-rating="8">★</button>
+          <button class="star" type="button" data-rating="9">★</button>
+          <button class="star" type="button" data-rating="10">★</button>
+          <span class="rating-caption" id="ratingCaption">Choose 1–10</span>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">How did the project make you feel? <span class="required">*</span></div>
+        <div class="moods">
+          <button class="mood" data-mood="Good" type="button">☻ Good</button>
+          <button class="mood" data-mood="Normal" type="button">◉ Normal</button>
+          <button class="mood" data-mood="Bad" type="button">☹ Bad</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="feedback">Your feedback <span class="required">*</span></label>
+        <textarea class="control" id="feedback" maxlength="500" placeholder="What did you like? What could we improve?" required></textarea>
+        <div class="counter"><span id="charCount">0</span>/500</div>
+      </div>
+
+      <div class="form-bottom">
+        <div class="privacy">Fields marked * are required.<br>Your review is saved in this browser.</div>
+        <button class="submit" type="submit">Submit Review ↗</button>
+      </div>
+
+    </form>
+  </div>
+</section>
+
+<div class="right-stack">
+
+<section class="card">
+  <div class="card-head">
+    <div>
+      <h3>Review Summary</h3>
+      <p>What visitors are saying</p>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-icon">★</div>
+      <div class="stat-number" id="totalCount">0</div>
+      <div class="stat-label">Total reviews</div>
+    </div>
+    <div class="stat">
+      <div class="stat-icon">☺</div>
+      <div class="stat-number" id="positiveCount">0</div>
+      <div class="stat-label">Positive</div>
+    </div>
+    <div class="stat">
+      <div class="stat-icon" style="color:var(--red)">☹</div>
+      <div class="stat-number" id="otherCount">0</div>
+      <div class="stat-label">Neutral / Bad</div>
+    </div>
+  </div>
+</section>
+
+<section class="card">
+  <div class="card-head">
+    <div>
+      <h3>Recent Reviews</h3>
+      <p>Latest visitor feedback</p>
+    </div>
+    <button class="small-btn" id="viewAll" type="button">View all ↗</button>
+  </div>
+  <div class="recent-list" id="recentList"></div>
+</section>
+
+</div>
+</section>
+
+<section class="card history-view" id="historyView">
+  <div class="card-head">
+    <div>
+      <h3>Review History</h3>
+      <p>All reviews saved on this browser</p>
+    </div>
+    <div class="history-tools">
+      <button class="small-btn" id="exportBtn" type="button">Export CSV ↓</button>
+      <button class="small-btn" id="clearBtn" type="button">Clear reviews</button>
+    </div>
+  </div>
+  <div class="recent-list" id="historyList"></div>
+</section>
+
+<footer class="footer">
+  <div><strong>RAIL-URJA</strong> | Smart Rail Electricity Generation</div>
+  <div>Clean Energy · Smart Technology · Sustainable Future</div>
+</footer>
+
+</main>
+</div>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(() => {
+"use strict";
+
+const STORAGE_KEY = "rail_urja_reviews_v1";
+let rating = 0;
+let mood = "";
+
+const $ = id => document.getElementById(id);
+const form = $("reviewForm");
+const ratingButtons = [...document.querySelectorAll(".star")];
+const moodButtons = [...document.querySelectorAll(".mood")];
+
+function loadReviews() {
+  try {
+    const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+    return Array.isArray(data)
+      ? data.filter(r => r && typeof r.name === "string" && typeof r.feedback === "string")
+      : [];
+  } catch (error) {
+    return [];
+  }
+}
+
+function saveReviews(reviews) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(reviews));
+    return true;
+  } catch (error) {
+    showToast("Could not save. Browser storage may be full or disabled.");
+    return false;
+  }
+}
+
+function showToast(message) {
+  const el = $("toast");
+  el.textContent = message;
+  el.classList.add("show");
+  clearTimeout(showToast.timer);
+  showToast.timer = setTimeout(() => {
+    el.classList.remove("show");
+  }, 3000);
+}
+
+function setRating(value) {
+  rating = value;
+
+  ratingButtons.forEach(btn => {
+    const active = Number(btn.dataset.rating) <= rating;
+    btn.classList.toggle("selected", active);
+    btn.setAttribute(
+      "aria-checked",
+      Number(btn.dataset.rating) === rating ? "true" : "false"
+    );
+  });
+
+  $("ratingCaption").textContent = rating
+    ? `${rating}/10 selected`
+    : "Choose 1–10";
+}
+
+ratingButtons.forEach(btn => {
+  btn.addEventListener("click", () => {
+    setRating(Number(btn.dataset.rating));
+  });
+});
+
+moodButtons.forEach(btn => {
+  btn.addEventListener("click", () => {
+    mood = btn.dataset.mood;
+
+    moodButtons.forEach(b => {
+      b.classList.toggle("selected", b === btn);
+    });
+  });
+});
+
+$("feedback").addEventListener("input", event => {
+  $("charCount").textContent = event.target.value.length;
+});
+
+function safeDate(value) {
+  const date = new Date(value);
+
+  return Number.isNaN(date.getTime())
+    ? "Date unavailable"
+    : date.toLocaleString([], {
+        dateStyle:"medium",
+        timeStyle:"short"
+      });
+}
+
+function makeReview(review) {
+  const item = document.createElement("article");
+  item.className = "review-item";
+
+  const top = document.createElement("div");
+  top.className = "review-top";
+
+  const personWrap = document.createElement("div");
+
+  const name = document.createElement("div");
+  name.className = "review-person";
+  name.textContent = review.name;
+
+  const date = document.createElement("div");
+  date.className = "review-date";
+  date.textContent = safeDate(review.date);
+
+  personWrap.append(name, date);
+
+  const stars = document.createElement("div");
+  stars.className = "review-stars";
+  stars.textContent =
+    "★".repeat(Math.max(0, Math.min(10, Number(review.rating) || 0))) +
+    ` ${review.rating || 0}/10`;
+
+  top.append(personWrap, stars);
+
+  const moodTag = document.createElement("span");
+  moodTag.className =
+    "review-mood" +
+    (review.mood === "Normal" ? " normal" :
+     review.mood === "Bad" ? " bad" : "");
+
+  moodTag.textContent = review.mood || "Unspecified";
+
+  const feedback = document.createElement("p");
+  feedback.className = "review-text";
+  feedback.textContent = review.feedback;
+
+  item.append(top, moodTag, feedback);
+
+  return item;
+}
+
+function renderList(container, reviews, emptyTitle, emptyText) {
+  container.replaceChildren();
+
+  if (!reviews.length) {
+    const empty = document.createElement("div");
+    empty.className = "empty";
+
+    const icon = document.createElement("div");
+    icon.className = "empty-icon";
+    icon.textContent = "▤";
+
+    const title = document.createElement("strong");
+    title.textContent = emptyTitle;
+
+    const desc = document.createElement("p");
+    desc.textContent = emptyText;
+
+    empty.append(icon, title, desc);
+    container.append(empty);
+    return;
+  }
+
+  reviews.forEach(review => {
+    container.append(makeReview(review));
+  });
+}
+
+function render() {
+  const reviews = loadReviews().sort(
+    (a, b) => new Date(b.date) - new Date(a.date)
+  );
+
+  $("totalCount").textContent = reviews.length;
+
+  $("positiveCount").textContent =
+    reviews.filter(r => r.mood === "Good").length;
+
+  $("otherCount").textContent =
+    reviews.filter(r => r.mood !== "Good").length;
+
+  renderList(
+    $("recentList"),
+    reviews.slice(0, 3),
+    "No reviews yet",
+    "Be the first to share your feedback."
+  );
+
+  renderList(
+    $("historyList"),
+    reviews,
+    "Your review history is empty",
+    "Submitted reviews will appear here on this device."
+  );
+}
+
+function showView(view) {
+  const history = view === "history";
+
+  $("giveLayout").classList.toggle("hidden", history);
+  $("historyView").style.display = history ? "block" : "none";
+
+  $("navGive").classList.toggle("active", !history);
+  $("navHistory").classList.toggle("active", history);
+
+  $("pageHeading").textContent =
+    history ? "Review History" : "Visitor Reviews";
+
+  $("pageIntro").textContent = history
+    ? "Browse the feedback saved on this device. You can also export it as a CSV file."
+    : "Your feedback helps us improve our idea and move towards a cleaner, greener future. Tell us what you think about RAIL-URJA.";
+
+  if (history) render();
+}
+
+$("navGive").addEventListener("click", () => {
+  showView("give");
+});
+
+$("navHistory").addEventListener("click", () => {
+  showView("history");
+  $("historyView").scrollIntoView({
+    behavior:"smooth",
+    block:"start"
+  });
+});
+
+$("viewAll").addEventListener("click", () => {
+  showView("history");
+  $("historyView").scrollIntoView({
+    behavior:"smooth",
+    block:"start"
+  });
+});
+
+form.addEventListener("submit", event => {
+  event.preventDefault();
+
+  const name = $("visitorName").value.trim();
+  const feedback = $("feedback").value.trim();
+
+  if (!name || !feedback) {
+    showToast("Please fill in your name and feedback.");
+    return;
+  }
+
+  if (!rating) {
+    showToast("Please choose a rating from 1 to 10.");
+    return;
+  }
+
+  if (!mood) {
+    showToast("Please choose Good, Normal, or Bad.");
+    return;
+  }
+
+  const reviews = loadReviews();
+
+  reviews.push({
+    id: Date.now().toString(),
+    name,
+    rating,
+    mood,
+    feedback,
+    date: new Date().toISOString()
+  });
+
+  if (!saveReviews(reviews)) return;
+
+  form.reset();
+  setRating(0);
+  mood = "";
+
+  moodButtons.forEach(btn => {
+    btn.classList.remove("selected");
+  });
+
+  $("charCount").textContent = "0";
+
+  render();
+  showView("give");
+  showToast("Thank you! Your review has been saved.");
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+});
+
+$("exportBtn").addEventListener("click", () => {
+  const reviews = loadReviews();
+
+  if (!reviews.length) {
+    showToast("There are no reviews to export yet.");
+    return;
+  }
+
+  const quote = value =>
+    '"' + String(value ?? "").replace(/"/g, '""') + '"';
+
+  const csv = [
+    ["Name","Rating out of 10","Mood","Feedback","Date"],
+    ...reviews.map(r => [
+      r.name,
+      r.rating,
+      r.mood,
+      r.feedback,
+      r.date
+    ])
+  ]
+  .map(row => row.map(quote).join(","))
+  .join("\r\n");
+
+  const blob = new Blob(
+    ["\uFEFF" + csv],
+    {type:"text/csv;charset=utf-8;"}
+  );
+
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+
+  link.href = url;
+  link.download = "rail-urja-reviews.csv";
+
+  document.body.append(link);
+  link.click();
+  link.remove();
+
+  URL.revokeObjectURL(url);
+  showToast("Review CSV exported.");
+});
+
+$("clearBtn").addEventListener("click", () => {
+  if (!loadReviews().length) {
+    showToast("There are no reviews to clear.");
+    return;
+  }
+
+  if (window.confirm("Clear all reviews saved in this browser? This cannot be undone.")) {
+    localStorage.removeItem(STORAGE_KEY);
+    render();
+    showToast("Browser reviews cleared.");
+  }
+});
+
+window.addEventListener("storage", event => {
+  if (event.key === STORAGE_KEY) render();
+});
+
+render();
+
+})();
+</script>
+</body>
+</html>
